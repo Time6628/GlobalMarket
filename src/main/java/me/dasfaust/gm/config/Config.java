@@ -61,8 +61,8 @@ public static String header = String.format("GlobalMarket config: v%s", Core.ins
     		" they did in previous versions, minus the mailbox. Items will",
     		" go straight to the player's cursor. (Default: false)"
         });
-        public static final ConfigDefault<Integer> STOCK_SLOTS = new ConfigDefault<Integer>("stock_slots", 16, new String[] {
-            "How many stock slots to give each player. (Default: 16)"
+        public static final ConfigDefault<Integer> STOCK_SLOTS = new ConfigDefault<Integer>("stock_slots", 18, new String[] {
+            "How many stock slots to give each player. (Default: 18)"
         });
         // TODO: implementation. Build on login to prevent wonkyness
 		public static final ConfigDefault<List<String>> STOCK_SLOTS_GROUPS = new ConfigDefault<List<String>>("stock_slots_groups", Arrays.asList(new String[] {"default:0"}), new String[] {
