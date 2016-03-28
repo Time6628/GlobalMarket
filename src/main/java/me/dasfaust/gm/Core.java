@@ -134,7 +134,6 @@ public class Core extends JavaPlugin
 				GMLogger.severe(e, "Failed to start Plugin Metrics, please report this error:");
 			}
 		}
-		
 		postEnable = true;
 	}
 	

@@ -7,7 +7,6 @@ import java.util.Map;
 
 import me.dasfaust.gm.config.Config;
 import me.dasfaust.gm.trade.*;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -153,6 +152,7 @@ public class Menus
 						if (remaining < viewer.lastStackOnCursor.getAmount())
 						{
 							viewer.lastStackOnCursor.setAmount(viewer.lastStackOnCursor.getAmount() - remaining);
+							player.setItemOnCursor(viewer.lastStackOnCursor.bukkit());
 							StorageHelper.updateStockAmount(stock, stock.amount + remaining);
 						}
 						else
@@ -458,7 +458,7 @@ public class Menus
 		}
 
 		@Override
-		public WrappedStack onClick(final Player player, MarketViewer viewer)
+		public WrappedStack onClick(final Player player, final MarketViewer viewer)
 		{
 			if (viewer.menu == MENU_LISTINGS || viewer.menu == MENU_SERVER_LISTINGS)
 			{
@@ -468,7 +468,14 @@ public class Menus
 					@Override
 					public void run()
 					{
-						Core.instance.handler().initViewer(player, MENU_STOCK);
+						if (viewer.player != null)
+						{
+							Core.instance.handler().initViewer(player, viewer.player, MENU_STOCK);
+						}
+						else
+						{
+							Core.instance.handler().initViewer(player, MENU_STOCK);
+						}
 					}
 				}.runTaskLater(Core.instance, 1);
 			}
@@ -480,7 +487,14 @@ public class Menus
 					@Override
 					public void run()
 					{
-						Core.instance.handler().initViewer(player, MENU_LISTINGS);
+						if (viewer.player != null)
+						{
+							Core.instance.handler().initViewer(player, viewer.player, MENU_LISTINGS);
+						}
+						else
+						{
+							Core.instance.handler().initViewer(player, MENU_LISTINGS);
+						}
 					}
 				}.runTaskLater(Core.instance, 1);
 			}
@@ -526,7 +540,7 @@ public class Menus
 		}
 
 		@Override
-		public WrappedStack onClick(final Player player, MarketViewer viewer)
+		public WrappedStack onClick(final Player player, final MarketViewer viewer)
 		{
 			if (viewer.menu == MENU_LISTINGS || viewer.menu == MENU_STOCK)
 			{
@@ -536,7 +550,14 @@ public class Menus
 					@Override
 					public void run()
 					{
-						Core.instance.handler().initViewer(player, MENU_SERVER_LISTINGS);
+						if (viewer.player != null)
+						{
+							Core.instance.handler().initViewer(player, viewer.player, MENU_SERVER_LISTINGS);
+						}
+						else
+						{
+							Core.instance.handler().initViewer(player, MENU_SERVER_LISTINGS);
+						}
 					}
 				}.runTaskLater(Core.instance, 1);
 			}
@@ -548,7 +569,14 @@ public class Menus
 					@Override
 					public void run()
 					{
-						Core.instance.handler().initViewer(player, MENU_LISTINGS);
+						if (viewer.player != null)
+						{
+							Core.instance.handler().initViewer(player, viewer.player, MENU_LISTINGS);
+						}
+						else
+						{
+							Core.instance.handler().initViewer(player, MENU_LISTINGS);
+						}
 					}
 				}.runTaskLater(Core.instance, 1);
 			}
@@ -593,7 +621,7 @@ public class Menus
 		}
 
 		@Override
-		public WrappedStack onClick(final Player player, MarketViewer viewer)
+		public WrappedStack onClick(final Player player, final MarketViewer viewer)
 		{
 			if (viewer.menu == MENU_LISTINGS || viewer.menu == MENU_SERVER_LISTINGS)
 			{
@@ -603,7 +631,14 @@ public class Menus
 					@Override
 					public void run()
 					{
-						Core.instance.handler().initViewer(player, MENU_STORAGE);
+						if (viewer.player != null)
+						{
+							Core.instance.handler().initViewer(player, viewer.player, MENU_STORAGE);
+						}
+						else
+						{
+							Core.instance.handler().initViewer(player, MENU_STORAGE);
+						}
 					}
 				}.runTaskLater(Core.instance, 1);
 			}
@@ -615,7 +650,14 @@ public class Menus
 					@Override
 					public void run()
 					{
-						Core.instance.handler().initViewer(player, MENU_LISTINGS);
+						if (viewer.player != null)
+						{
+							Core.instance.handler().initViewer(player, viewer.player, MENU_LISTINGS);
+						}
+						else
+						{
+							Core.instance.handler().initViewer(player, MENU_LISTINGS);
+						}
 					}
 				}.runTaskLater(Core.instance, 1);
 			}
@@ -698,7 +740,7 @@ public class Menus
 		MENU_STORAGE.addFunction(45, FUNC_PREVPAGE);
 		MENU_STORAGE.addFunction(53, Menus.FUNC_NEXTPAGE);
 		MENU_STORAGE.addFunction(52, Menus.FUNC_STORAGE_NAVIGATION);
-		
+
 		if (Core.instance.config().get(Defaults.DISABLE_STOCK))
 		{
 			MENU_LISTINGS.addFunction(46, FUNC_NOSTOCK_CREATE_LISTING);
@@ -717,5 +759,10 @@ public class Menus
 				MENU_LISTINGS.addFunction(47, FUNC_SERVER_LISTINGS_NAVIGATION);
 			}
 		}
+	}
+
+	public static void addButton(MenuBase<?> menu, int slot, FunctionButton button)
+	{
+		menu.addFunction(slot, button);
 	}
 }

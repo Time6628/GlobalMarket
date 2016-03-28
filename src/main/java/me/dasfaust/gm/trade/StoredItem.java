@@ -63,9 +63,9 @@ public class StoredItem extends MarketObject
         {
             return stack;
         }
-        if (Core.instance.econ().has(viewer.player(), 250))
+        if (Core.instance.econ().has(viewer.player(), Core.instance.config().get(Config.Defaults.STORAGE_WITHDRAW_AMOUNT)))
         {
-            Core.instance.econ().withdrawPlayer(viewer.player(), 250);
+            Core.instance.econ().withdrawPlayer(viewer.player(), Core.instance.config().get(Config.Defaults.STORAGE_WITHDRAW_AMOUNT));
             viewer.player().setItemOnCursor(Core.instance.storage().get(itemId).setAmount(amount).checkNbt().bukkit());
             Core.instance.storage().removeObject(StoredItem.class, id);
             viewer.reset();
